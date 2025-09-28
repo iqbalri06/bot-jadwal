@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+
+# WhatsApp session files
+sessions/
+
+# Database files
+*.db
+*.db-journal
+
+# Asset files (except keep the directory)
+assets/*
+!assets/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/*
+!.vscode/tasks.json
+.idea/
+*.code-workspace
+*.swp
+*.swo
