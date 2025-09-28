@@ -4,12 +4,25 @@ const fs = require('fs');
 const qrcode = require('qrcode-terminal');
 const messageHandler = require('./handlers/messageHandler');
 const memoryMonitor = require('./utils/memoryMonitor');
+const sessionManager = require('./utils/sessionManager');
+const systemDiagnostics = require('./utils/systemDiagnostics');
 
-// Create sessions directory if it doesn't exist
+// Setup sessions directory and ensure it's tracked by git
 const SESSION_DIR = path.join(__dirname, '../sessions');
-if (!fs.existsSync(SESSION_DIR)) {
-    fs.mkdirSync(SESSION_DIR, { recursive: true });
-}
+sessionManager.ensureSessionDir();
+
+// Check if sessions are being properly tracked by git
+sessionManager.checkGitIgnore((err, result) => {
+    if (err) {
+        console.error('Error checking git ignore status:', err);
+    } else if (result.isIgnored) {
+        console.warn('⚠️ WARNING:', result.message);
+        console.warn('⚠️ Sessions may not be uploaded to GitHub.');
+        console.warn('⚠️ Make sure sessions/ is not in your .gitignore file.');
+    } else {
+        console.log('✅', result.message);
+    }
+});
 
 // Initialize the WhatsApp connection
 async function connectToWhatsApp() {

@@ -7,7 +7,8 @@ yarn.lock
 .env
 
 # WhatsApp session files
-sessions/
+# Uncomment line below if you want to exclude session files (recommended for security)
+# sessions/
 
 # Database files
 *.db
